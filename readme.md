@@ -6,4 +6,5 @@ macOS:
 
 install ts-node and nodemon to run typescript files directly without compiling:
 - pnpm install nodemon ts-node --save-dev
-- 
+- packages of apps:
+- morgan, 
