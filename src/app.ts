@@ -6,6 +6,10 @@ export default app;
 
 // load middleware
 app.use(morgan("dev"));
+// app.use(morgan("combined"));
+// app.use(morgan("common"));
+// app.use(morgan("short"));
+// app.use(morgan("tiny"));
 // load database
 
 // load route
