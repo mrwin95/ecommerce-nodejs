@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import helmet from "helmet";
 import compression from "compression";
 
@@ -7,6 +8,8 @@ const app = express();
 
 export default app;
 
+// load env
+dotenv.config();
 // load middleware
 app.use(morgan("dev"));
 app.use(helmet());
