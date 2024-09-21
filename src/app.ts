@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import morgan from "morgan";
 const app = express();
 
@@ -6,6 +7,7 @@ export default app;
 
 // load middleware
 app.use(morgan("dev"));
+app.use(helmet());
 // app.use(morgan("combined"));
 // app.use(morgan("common"));
 // app.use(morgan("short"));
