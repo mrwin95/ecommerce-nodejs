@@ -16,7 +16,7 @@ app.use(compression());
 // app.use(morgan("short"));
 // app.use(morgan("tiny"));
 // load database
-
+require("./dbs/mongodb.lv0");
 // load route
 
 app.get("/", (req, res, next) => {
