@@ -17,6 +17,9 @@ app.use(compression());
 // app.use(morgan("tiny"));
 // load database
 require("./dbs/init.mongodb");
+const { countConnect, checkOverConnection } = require("./helpers/check.connect");
+countConnect();
+checkOverConnection();
 // load route
 
 app.get("/", (req, res, next) => {
