@@ -1,0 +1,9 @@
+how to use pnpm
+macOS:
+- install corepack brew install corepack
+- enable pnpm corepack enable pnpm
+- pin the version corepack use pnpm@latest
+
+install ts-node and nodemon to run typescript files directly without compiling:
+- pnpm install nodemon ts-node --save-dev
+- 
