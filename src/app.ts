@@ -1,5 +1,13 @@
-const greet = (name: string): string => {
-  return `Hello, ${name}`;
-};
+import express from "express";
 
-console.log(greet("NodeJs and pnpm and nodemon"));
+const app = express();
+
+export default app;
+
+// load middleware
+
+// load database
+
+// load route
+
+// check exceptions
