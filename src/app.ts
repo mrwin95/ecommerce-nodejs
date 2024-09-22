@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import compression from "compression";
-
+import bodyParser from "body-parser";
 import morgan from "morgan";
 
 import { Database } from "./dbs/init.mongodb";
@@ -18,6 +18,8 @@ dotenv.config();
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // app.use(morgan("combined"));
 // app.use(morgan("common"));
 // app.use(morgan("short"));
