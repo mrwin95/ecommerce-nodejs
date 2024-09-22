@@ -6,14 +6,14 @@ import process from "process";
 
 const _SECONDS: number = 5000;
 // count connection
-const countConnect = () => {
+export const countConnect = () => {
   const numberOfConnection = mongoose.connections.length;
   console.log(`Number of connection: ${numberOfConnection}`);
 };
 
 // check over connection
 
-const checkOverConnection = () => {
+export const checkOverConnection = () => {
   setInterval(() => {
     const numConnection = mongoose.connections.length;
     const numCores = os.cpus().length;
@@ -27,8 +27,4 @@ const checkOverConnection = () => {
       console.log(`Connection overload detected!`);
     }
   }, _SECONDS);
-};
-module.exports = {
-  countConnect,
-  checkOverConnection,
 };
