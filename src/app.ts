@@ -7,6 +7,7 @@ import morgan from "morgan";
 
 import { Database } from "./dbs/init.mongodb";
 import { countConnect, checkOverConnection } from "./helpers/check.connect";
+import router from "./routes";
 const app = express();
 
 export default app;
@@ -28,4 +29,5 @@ countConnect();
 checkOverConnection();
 // load route
 
+app.use("/", router);
 // check exceptions

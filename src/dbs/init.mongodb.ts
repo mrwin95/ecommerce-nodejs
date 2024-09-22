@@ -1,10 +1,5 @@
 "use strict";
 import mongoose from "mongoose";
-
-// const {
-//   db: { host, port, name },
-// } = require("../configs/config.mongo");
-
 import config from "../configs/config.mongo";
 
 const connectStr = `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`;
@@ -40,7 +35,3 @@ export class Database {
     this.getInstance();
   }
 }
-
-// const instanceDatabase = Database.getInstance();
-
-// export default instanceDatabase;

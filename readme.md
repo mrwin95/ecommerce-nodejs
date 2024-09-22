@@ -15,3 +15,5 @@ code api:
 
 install mongo snip to support create schema
 - command !mdbgum
+-- to do postman test should install httprequest package
+
