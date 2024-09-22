@@ -5,6 +5,7 @@ import compression from "compression";
 
 import morgan from "morgan";
 
+import { Database } from "./dbs/init.mongodb";
 import { countConnect, checkOverConnection } from "./helpers/check.connect";
 const app = express();
 
@@ -21,7 +22,8 @@ app.use(compression());
 // app.use(morgan("short"));
 // app.use(morgan("tiny"));
 // load database
-require("./dbs/init.mongodb");
+// require("./dbs/init.mongodb");
+Database.initialize();
 countConnect();
 checkOverConnection();
 // load route

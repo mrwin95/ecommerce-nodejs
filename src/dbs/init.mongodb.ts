@@ -7,7 +7,7 @@ const {
 
 const connectStr = `mongodb://${host}:${port}/${name}`;
 
-class Database {
+export class Database {
   static instance: Database;
   constructor() {
     this.connect();
@@ -33,8 +33,12 @@ class Database {
 
     return Database.instance;
   }
+
+  static initialize(): void {
+    this.getInstance();
+  }
 }
 
-const instanceDatabase = Database.getInstance();
+// const instanceDatabase = Database.getInstance();
 
-export default instanceDatabase;
+// export default instanceDatabase;
