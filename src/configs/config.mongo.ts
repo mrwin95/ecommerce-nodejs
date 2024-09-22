@@ -1,4 +1,20 @@
-const dev = {
+interface AppConfig {
+  port: number | string;
+}
+
+interface DBConfig {
+  host: string;
+  port: number | string;
+  name: string;
+}
+
+interface EnvConfig {
+  app: AppConfig;
+  db: DBConfig;
+}
+
+// Development env configuration
+const dev: EnvConfig = {
   app: {
     port: process.env.DEV_APP_PORT || 3055,
   },
@@ -9,7 +25,8 @@ const dev = {
   },
 };
 
-const prod = {
+// Production env configuration
+const prod: EnvConfig = {
   app: {
     port: process.env.PRO_APP_PORT || 3055,
   },
@@ -20,8 +37,12 @@ const prod = {
   },
 };
 
-const config: any = { dev, prod };
-const env = process.env.NODE_ENV || "dev";
+const config: Record<string, EnvConfig> = { dev, prod };
 
-console.log(config[env], env);
-module.exports = config[env];
+enum EnvType {
+  Development = "dev",
+  Production = "prod",
+}
+const env: EnvType = (process.env.NODE_ENV as EnvType) || EnvType.Development;
+
+export default config[env];

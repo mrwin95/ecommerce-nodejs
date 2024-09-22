@@ -1,11 +1,13 @@
 "use strict";
 import mongoose from "mongoose";
 
-const {
-  db: { host, port, name },
-} = require("../configs/config.mongo");
+// const {
+//   db: { host, port, name },
+// } = require("../configs/config.mongo");
 
-const connectStr = `mongodb://${host}:${port}/${name}`;
+import config from "../configs/config.mongo";
+
+const connectStr = `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`;
 
 export class Database {
   static instance: Database;
