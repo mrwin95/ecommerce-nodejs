@@ -9,7 +9,7 @@ class AccessController {
       console.log(`[p]: signUp...`, req.body);
 
       const shopDto: ShopDto = req.body as ShopDto;
-      return res.status(201).json(AccessService.signUp(shopDto));
+      return res.status(201).json(await AccessService.signUp(shopDto));
     } catch (error) {
       console.log(error);
     }
