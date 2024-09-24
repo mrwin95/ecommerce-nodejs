@@ -8,7 +8,6 @@ var shopSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
       index: true,
       maxLength: 150,
       trim: true,
