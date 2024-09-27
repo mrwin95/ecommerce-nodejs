@@ -13,10 +13,10 @@ export interface ShopDto {
 }
 
 enum ShopRole {
-  SHOP,
-  ADMIN,
-  WRITER,
-  EDITOR,
+  Shop = "SHOP",
+  Admin = "ADMIN",
+  Write = "WRITER",
+  Editor = "EDITOR",
 }
 
 export class AccessService {
@@ -43,7 +43,7 @@ export class AccessService {
       //   const passwordHashed = await crypto.createHash("sha512");
 
       shopDto.password = hash; // passwordHashed.digest("base64");
-      shopDto.roles = [ShopRole.SHOP];
+      shopDto.roles = [ShopRole.Shop];
       const newShop = await shopModel.create(shopDto);
 
       if (newShop) {
@@ -53,52 +53,64 @@ export class AccessService {
 
         const array = new Uint8Array(64);
         crypto.getRandomValues(array);
-        // convert to hexdecimal
-
-        // const hexString =
-
-        // const privateKey = Array.from(array)
-        //   .map((byte) => byte.toString(16).padStart(2, "0"))
-        //   .join("");
-        // const publicKey = Array.from(array)
-        //   .map((byte) => byte.toString(16).padStart(2, "0"))
-        //   .join("");
 
         const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
           modulusLength: 4096,
         });
 
-        console.log(`keys:`, { privateKey, publicKey }); //save collection KeyStore
+        // console.log(`keys:`, { privateKey, publicKey }); //save collection KeyStore
+
+        // convert to string format
+        const privateKeyString = privateKey.export({
+          type: "pkcs1",
+          format: "pem",
+        });
+
+        const publicKeyString = publicKey.export({
+          type: "pkcs1",
+          format: "pem",
+        });
 
         const keyToken: KeyTokenDto = {
-          userId: newShop._id.toString(),
-          privateKey,
-          publicKey,
+          user: newShop._id.toString(),
+          publicKey: publicKeyString.toString(),
         };
         // create token
-        const keyStore = await this.keyTokenService.createKeyToken(keyToken);
+        const publicKeyTokenString = await this.keyTokenService.createKeyToken(
+          keyToken
+        );
 
-        if (!keyStore) {
+        // console.log("key", publicKeyString);
+
+        if (!publicKeyTokenString) {
           return {
             code: "xxxx",
             message: "publicString error",
           };
         }
 
-        // console.log("publicKeyString: ", publicKeyString);
-        // const publicKeyObject = crypto.createPublicKey(publicKey);
+        const publicKeyObject = crypto
+          .createPublicKey(publicKeyTokenString)
+          .export({
+            type: "pkcs1",
+            format: "pem",
+          });
+        // console.log(`publicKeyObject`, publicKeyObject);
+
         const tokenPair: TokenPair = {
           payload: {
             userId: newShop._id.toString(),
             email: shopDto.email,
           },
-          privateKey,
-          publicKey,
+          privateKey: privateKeyString.toString(),
+          publicKey: publicKeyObject.toString(),
         };
+
+        // create token pair
         const tokens = await AuthUtil.createTokenPair(tokenPair);
-        console.log("created token sucessfully");
+        console.log("created token successfully");
         return {
-          code: 202,
+          code: 201,
           metadata: {
             shop: newShop,
             tokens,

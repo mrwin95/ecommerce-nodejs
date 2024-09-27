@@ -3,8 +3,8 @@ import { KeyObject } from "node:crypto";
 
 export interface TokenPair {
   payload: {};
-  privateKey: KeyObject;
-  publicKey: KeyObject;
+  privateKey: string;
+  publicKey: string;
 }
 
 export class AuthUtil {
@@ -32,10 +32,22 @@ export class AuthUtil {
 
       // verify token
 
-      JWT.verify(accessToken, tokenPair.publicKey, (error, decode) => {
-        if (error) console.error("verify error: ", error);
-        console.log(`decode: `, decode);
-      });
+      console.log("public Key: ", tokenPair.publicKey.toString());
+
+      const decodedHeader = JWT.decode(tokenPair.publicKey, {
+        complete: true,
+      })?.header;
+      console.log("decodedHeader", decodedHeader);
+
+      JWT.verify(
+        accessToken,
+        tokenPair.publicKey,
+        { algorithms: ["RS256"] },
+        (error, decode) => {
+          if (error) console.error("verify error: ", error);
+          console.log(`decode: `, decode);
+        }
+      );
 
       return { accessToken, refreshToken };
     } catch (error) {
