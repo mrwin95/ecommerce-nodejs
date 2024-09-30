@@ -4,6 +4,7 @@ import shopModel from "../models/shop.model";
 import crypto from "node:crypto";
 import { KeyTokenDto, KeyTokenService } from "./keyToken.service";
 import { AuthUtil, TokenPair } from "../auth/authUtil";
+import { getData, getDataInfo } from "../utils";
 
 export interface ShopDto {
   name: string;
@@ -109,6 +110,7 @@ export class AccessService {
         // create token pair
         const tokens = await AuthUtil.createTokenPair(tokenPair);
         console.log("created token successfully");
+        // const fields: Array<keyof typeof newShop> = ["_id", "name", "email"];
         return {
           code: 201,
           metadata: {
