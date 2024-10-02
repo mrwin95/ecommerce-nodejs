@@ -2,6 +2,7 @@
 
 import { NextFunction, Request, Response } from "express";
 import { AccessService, ShopDto } from "../services/access.service";
+import { Created } from "../core/success.response";
 
 export class AccessController {
   constructor(public accessService: AccessService) {}
@@ -9,7 +10,12 @@ export class AccessController {
     console.log(`[p]: signUp...`, req.body);
 
     const shopDto: ShopDto = req.body as ShopDto;
-    return res.status(201).json(await this.accessService.signUp(shopDto));
+    // new Created("", metadata: '' )
+    new Created({
+      message: "Shop Registered ok.!",
+      metadata: await this.accessService.signUp(shopDto),
+    }).send(res);
+    // return res.status(201).json(await this.accessService.signUp(shopDto));
   };
 }
 
