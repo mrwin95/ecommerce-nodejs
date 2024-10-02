@@ -2,18 +2,26 @@ import { KeyObject } from "node:crypto";
 import keyModel from "../models/keytoken.model";
 
 export interface KeyTokenDto {
-  user: string;
-  //   privateKey: string;
+  userId: string;
+  privateKey?: string;
   publicKey: string;
+  refreshToken?: string | undefined;
 }
 
 export class KeyTokenService {
   createKeyToken = async (keyToken: KeyTokenDto): Promise<string | null> => {
     try {
-      //   const publicKeyString = keyToken.publicKey.toString();
+      const filter = { user: keyToken.userId };
+      const { privateKey, publicKey, refreshToken } = keyToken;
+      const update = {
+        privateKey,
+        publicKey,
+        refreshTokensUsed: [],
+        refreshToken,
+      };
 
-      // create keyToken
-      const tokens = await keyModel.create(keyToken);
+      const options = { upsert: true, new: true };
+      const tokens = await keyModel.findOneAndUpdate(filter, update, options);
       return tokens ? tokens.publicKey : null;
     } catch (error: any) {
       return error;

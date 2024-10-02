@@ -6,7 +6,7 @@ Content-Type: application/json
 x-api-key: 60a7d4c5f980badbd6b61953e0d9c5d1ff37351ab0f844be8dc1fa9d6ee20522afb4e34e711dbf4f1b8c09d4347049c9292933b95d6964dc5643d067d60cfa73
 
 {
-    "name": "Shop Win2",
-    "email": "thang13@gmail.com",
+    "name": "Shop Win1",
+    "email": "thang4@gmail.com",
     "password": "Thang123"
 }

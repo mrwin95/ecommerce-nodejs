@@ -12,5 +12,6 @@ const accessService = new AccessService(tokenService);
 const accessController = new AccessController(accessService);
 
 routerAccess.post("/shop/signup", asyncHandle(accessController.signUp));
+routerAccess.post("/shop/login", asyncHandle(accessController.signIn));
 
 export default routerAccess;

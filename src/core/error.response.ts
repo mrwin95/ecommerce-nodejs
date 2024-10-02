@@ -16,3 +16,12 @@ export class BadRequest extends ErrorResponse {
     super(message, statusCode);
   }
 }
+
+export class UnAuthorized extends ErrorResponse {
+  constructor(
+    message: string = StatusMessage.UN_AUTHORIZED,
+    statusCode: number = StatusCode.UN_AUTHORIZED
+  ) {
+    super(message, statusCode);
+  }
+}

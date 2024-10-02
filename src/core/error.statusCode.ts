@@ -3,6 +3,7 @@ export const StatusCode = {
   CREATED: 201,
   OK: 200,
   BAD_REQUEST: 401,
+  UN_AUTHORIZED: 403,
 };
 
 export const StatusMessage = {
@@ -10,4 +11,5 @@ export const StatusMessage = {
   OK: "Ok",
   CREATED: "Created",
   BAD_REQUEST: "Bad request",
+  UN_AUTHORIZED: "Authorized failed",
 };

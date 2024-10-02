@@ -16,7 +16,7 @@ export class AuthUtil {
         tokenPair.payload,
         tokenPair.privateKey,
         {
-          algorithm: "RS256",
+          //   algorithm: "RS256",
           expiresIn: "2 days",
         }
       );
@@ -25,7 +25,7 @@ export class AuthUtil {
         tokenPair.payload,
         tokenPair.privateKey,
         {
-          algorithm: "RS256",
+          //   algorithm: "RS256",
           expiresIn: "7 days",
         }
       );
@@ -37,12 +37,13 @@ export class AuthUtil {
       const decodedHeader = JWT.decode(tokenPair.publicKey, {
         complete: true,
       })?.header;
+
       console.log("decodedHeader", decodedHeader);
 
       JWT.verify(
         accessToken,
         tokenPair.publicKey,
-        { algorithms: ["RS256"] },
+        // { algorithms: ["RS256"] },
         (error, decode) => {
           if (error) console.error("verify error: ", error);
           console.log(`decode: `, decode);
