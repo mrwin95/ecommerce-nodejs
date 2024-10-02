@@ -1,7 +1,7 @@
 ### signup
 @url_dev = http://localhost:3055/v1/api/
 
-POST {{url_dev}}/shop/signup
+POST {{url_dev}}/shop/signups
 Content-Type: application/json
 x-api-key: 60a7d4c5f980badbd6b61953e0d9c5d1ff37351ab0f844be8dc1fa9d6ee20522afb4e34e711dbf4f1b8c09d4347049c9292933b95d6964dc5643d067d60cfa73
 
@@ -9,4 +9,4 @@ x-api-key: 60a7d4c5f980badbd6b61953e0d9c5d1ff37351ab0f844be8dc1fa9d6ee20522afb4e
     "name": "Shop Win",
     "email": "thang1@gmail.com",
     "password": "Thang123"
-}helpnf
+}

@@ -6,14 +6,10 @@ import { AccessService, ShopDto } from "../services/access.service";
 export class AccessController {
   constructor(public accessService: AccessService) {}
   signUp = async (req: any, res: any, next: any) => {
-    try {
-      console.log(`[p]: signUp...`, req.body);
+    console.log(`[p]: signUp...`, req.body);
 
-      const shopDto: ShopDto = req.body as ShopDto;
-      return res.status(201).json(await this.accessService.signUp(shopDto));
-    } catch (error) {
-      console.log(error);
-    }
+    const shopDto: ShopDto = req.body as ShopDto;
+    return res.status(201).json(await this.accessService.signUp(shopDto));
   };
 }
 

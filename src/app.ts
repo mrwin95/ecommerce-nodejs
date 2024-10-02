@@ -8,6 +8,8 @@ import morgan from "morgan";
 import { Database } from "./dbs/init.mongodb";
 import { countConnect, checkOverConnection } from "./helpers/check.connect";
 import router from "./routes";
+import { ErrorResponse } from "./core/error.response";
+import { StatusCode } from "./core/Error.StatusCode";
 const app = express();
 
 export default app;
@@ -33,3 +35,18 @@ checkOverConnection();
 
 app.use("/", router);
 // check exceptions
+
+app.use((req, res, next) => {
+  const error = new ErrorResponse("Not Found", StatusCode.NOT_FOUND);
+  next(error);
+});
+
+app.use((error: any, req: any, res: any, next: any) => {
+  const statusCode = error.statusCode || 500;
+  const message = error.message || "Internal Server Error";
+  return res.status(statusCode).json({
+    status: "error",
+    code: error.statusCode,
+    error: message,
+  });
+});
