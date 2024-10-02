@@ -14,6 +14,9 @@ export class AccessController {
     new Created({
       message: "Shop Registered ok.!",
       metadata: await this.accessService.signUp(shopDto),
+      options: {
+        limit: 10,
+      },
     }).send(res);
     // return res.status(201).json(await this.accessService.signUp(shopDto));
   };

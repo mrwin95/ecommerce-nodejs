@@ -29,12 +29,15 @@ export class Ok extends SuccessResponse {
 }
 
 export class Created extends SuccessResponse {
+  options: {};
   constructor({
     message = "",
     statusCode = StatusCode.CREATED,
     reasonStatusCode = StatusMessage.CREATED,
     metadata = {},
+    options = {},
   }) {
     super({ message, statusCode, reasonStatusCode, metadata });
+    this.options = options;
   }
 }
