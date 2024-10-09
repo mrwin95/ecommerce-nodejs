@@ -8,41 +8,29 @@ export interface TokenPair {
 }
 
 export class AuthUtil {
-  static createTokenPair = async (tokenPair: TokenPair) => {
+  static createTokenPair = async (
+    payload: {},
+    publicKey: string,
+    privateKey: string
+  ) => {
     try {
       // access Token
 
-      const accessToken = await JWT.sign(
-        tokenPair.payload,
-        tokenPair.privateKey,
-        {
-          //   algorithm: "RS256",
-          expiresIn: "2 days",
-        }
-      );
+      const accessToken = await JWT.sign(payload, privateKey, {
+        //   algorithm: "RS256",
+        expiresIn: "2 days",
+      });
 
-      const refreshToken = await JWT.sign(
-        tokenPair.payload,
-        tokenPair.privateKey,
-        {
-          //   algorithm: "RS256",
-          expiresIn: "7 days",
-        }
-      );
+      const refreshToken = await JWT.sign(payload, privateKey, {
+        //   algorithm: "RS256",
+        expiresIn: "7 days",
+      });
 
       // verify token
 
-      console.log("public Key: ", tokenPair.publicKey.toString());
-
-      const decodedHeader = JWT.decode(tokenPair.publicKey, {
-        complete: true,
-      })?.header;
-
-      console.log("decodedHeader", decodedHeader);
-
       JWT.verify(
         accessToken,
-        tokenPair.publicKey,
+        publicKey,
         // { algorithms: ["RS256"] },
         (error, decode) => {
           if (error) console.error("verify error: ", error);

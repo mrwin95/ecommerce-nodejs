@@ -52,79 +52,96 @@ export class AccessService {
     const privateKey = crypto.randomBytes(64).toString("hex");
     const publicKey = crypto.randomBytes(64).toString("hex");
 
-    const tokenPair: TokenPair = {
-      payload: {
-        userId: foundedShop._id.toString(),
-        email: foundedShop.email,
-      },
-      privateKey,
-      publicKey,
-    };
+    // const tokenPair: TokenPair = {
+    //   payload: {
+    //     userId: foundedShop._id.toString(),
+    //     email: foundedShop.email,
+    //   },
+    //   privateKey,
+    //   publicKey,
+    // };
 
     // create token pair
-    const tokens = await AuthUtil.createTokenPair(tokenPair);
-    const keyToken: KeyTokenDto = {
-      userId: foundedShop._id.toString(),
-      privateKey,
-      publicKey,
-      refreshToken,
-    };
+    // const tokens = await AuthUtil.createTokenPair(tokenPair);
+    // const keyToken: KeyTokenDto = {
+    //   userId: foundedShop._id.toString(),
+    //   privateKey,
+    //   publicKey,
+    //   refreshToken,
+    // };
 
-    await this.keyTokenService.createKeyToken(keyToken);
+    // await this.keyTokenService.createKeyToken(keyToken);
     return {
       metadata: {
         shop: foundedShop,
-        tokens,
+        // tokens,
       },
     };
   };
 
-  signUp = async (shopDto: ShopDto) => {
+  signUp = async ({ name = "", email = "", password = "" }) => {
     console.log(`Start signup service`);
 
-    const holderSignup = await shopModel
-      .findOne({ email: shopDto.email })
-      .lean();
+    const holderSignup = await shopModel.findOne({ email }).lean();
     if (holderSignup) {
       throw new BadRequest("Shop is ready registered");
     }
 
-    const passwordHashed = await bcrypt.hash(shopDto.password, 10);
+    const passwordHashed = await bcrypt.hash(password, 10);
 
-    shopDto.password = passwordHashed;
-    shopDto.roles = [ShopRole.Shop];
-    const newShop = await shopModel.create(shopDto);
+    // shopDto.password = passwordHashed;
+    // shopDto.roles = [ShopRole.Shop];
+    const newShop = await shopModel.create({
+      name,
+      email,
+      password: passwordHashed,
+      roles: [ShopRole.Shop],
+    });
 
     if (newShop) {
       const privateKey = crypto.randomBytes(64).toString("hex");
       const publicKey = crypto.randomBytes(64).toString("hex");
 
-      const keyToken: KeyTokenDto = {
-        userId: newShop._id.toString(),
-        privateKey,
-        publicKey,
-      };
+      const publicKeyString = await this.keyTokenService.createKeyToken(
+        newShop._id.toString(),
+        publicKey
+      );
+      //   const keyToken: KeyTokenDto = {
+      //     userId: newShop._id.toString(),
+      //     privateKey,
+      //     publicKey,
+      //   };
       // create token
-      const keyStore = await this.keyTokenService.createKeyToken(keyToken);
+      //   const keyStore = await this.keyTokenService.createKeyToken(keyToken);
 
-      if (!keyStore) {
+      if (!publicKeyString) {
         return {
           code: "xxxx",
           message: "publicString error",
         };
       }
 
-      const tokenPair: TokenPair = {
-        payload: {
-          userId: newShop._id.toString(),
-          email: shopDto.email,
-        },
-        privateKey,
-        publicKey,
-      };
+      const publicKeyObject = crypto.createPublicKey(publicKeyString).export({
+        type: "pkcs1",
+        format: "pem",
+      });
+
+      //   const tokenPair: TokenPair = {
+      //     payload: {
+      //       userId: newShop._id.toString(),
+      //       email: shopDto.email,
+      //     },
+      //     privateKey,
+      //     publicKey,
+      //   };
 
       // create token pair
-      const tokens = await AuthUtil.createTokenPair(tokenPair);
+      const tokens = await AuthUtil.createTokenPair(
+        { userId: newShop._id, email: email },
+        publicKeyObject.toString(),
+        privateKey
+      );
+
       console.log("created token successfully");
       return {
         metadata: {
