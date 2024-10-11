@@ -36,4 +36,13 @@ export class AccessController {
       },
     }).send(res);
   };
+
+  getMSSQLVersion = async (req: any, res: any, next: any) => {
+    console.log("getMSSQLVersion - controller");
+
+    // const sqlVersion = ;
+    new SuccessResponse({
+      metadata: await this.accessService.getMSSQLVersion(),
+    }).send(res);
+  };
 }

@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 
 import { Database } from "./dbs/init.mongodb";
+import { DatabasePool } from "./dbs/init.mssql";
 import { countConnect, checkOverConnection } from "./helpers/check.connect";
 import router from "./routes";
 import { ErrorResponse } from "./core/error.response";
@@ -29,8 +30,13 @@ app.use(bodyParser.json());
 // load database
 // require("./dbs/init.mongodb");
 Database.initialize();
-countConnect();
-checkOverConnection();
+// console.log("1");
+
+DatabasePool.initialize();
+// console.log("2");
+
+// countConnect();
+// checkOverConnection();
 // load route
 
 app.use("/", router);

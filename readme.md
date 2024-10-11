@@ -17,3 +17,11 @@ install mongo snip to support create schema
 - command !mdbgum
 -- to do postman test should install httprequest package
 
+
+Mongo essential information:
+
+1. 1 collection can store 100mil mb,
+2. allow nest 
+3. can process big data, vertical or horizontal
+4. wire tiger (32tb)
+5. 

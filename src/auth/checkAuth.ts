@@ -13,8 +13,6 @@ export const apiKey = async (
   next: NextFunction
 ) => {
   try {
-    console.log("to here");
-
     const key = req.headers[HEADER.API_KEY]?.toString();
     if (!key) {
       return res.status(403).json({
@@ -23,6 +21,7 @@ export const apiKey = async (
     }
 
     const objKey = await findById(key);
+    console.log("to here 1", objKey);
     if (!objKey) {
       return res.status(403).json({
         message: "Forbidden",

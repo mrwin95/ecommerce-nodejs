@@ -14,4 +14,6 @@ const accessController = new AccessController(accessService);
 routerAccess.post("/shop/signup", asyncHandle(accessController.signUp));
 routerAccess.post("/shop/login", asyncHandle(accessController.signIn));
 
+routerAccess.get("/shop/mssql-version", accessController.getMSSQLVersion);
+
 export default routerAccess;

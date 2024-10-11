@@ -8,6 +8,7 @@ import { getData, getDataInfo } from "../utils";
 import { BadRequest, UnAuthorized } from "../core/error.response";
 import { findByEmail } from "./shop.service";
 import bcrypt from "bcrypt";
+import { DatabasePool } from "../dbs/init.mssql";
 
 export interface ShopDto {
   name: string;
@@ -149,6 +150,22 @@ export class AccessService {
           tokens,
         },
       };
+    }
+  };
+
+  getMSSQLVersion = async () => {
+    console.log("getMSSQLVersion");
+
+    try {
+      const pool = await DatabasePool.getInstance().connectionPool();
+      const result = await pool.request().query("SELECT @@version;");
+      console.log(result.recordset);
+      return {
+        metadata: result.recordset,
+      };
+    } catch (error) {
+      console.log("Errors querying database");
+      throw error;
     }
   };
 }

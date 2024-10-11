@@ -10,6 +10,7 @@ export const findById = async (key: string): Promise<object | null> => {
   //   });
 
   //   console.log(newKey);
+  console.log("key to find", key);
 
   const objKey = apiKeyModel.findOne({ key, status: true }).lean();
 
